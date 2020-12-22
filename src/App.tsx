@@ -6,7 +6,7 @@ function App(): JSX.Element {
   return (
     <div className="App">
       hallo
-      <b>Jetzt gehts weiter</b>
+      <b>Jetzt gehts weiter, hier was geändert </b>
     </div>
   );
 }
