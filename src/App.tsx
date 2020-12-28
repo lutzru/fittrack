@@ -1,22 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./App.css";
 
+import { Box, Button, Grid } from "@material-ui/core";
+
+import NewLogEntry from "./components/NewLogEntry";
+import NewLogEntryPage from "./pages/NewLogEntryPage";
+import decodeLogCode, { EntryType, CodeEntryType } from "./components/Decoder";
+import LogList from "./components/LogList";
+import { format } from "date-fns";
+
 function App(): JSX.Element {
+  //
+  // Hier wird der zentrale State gehalten
+  // und alles wird im zentralen State gehalten!
+  //
+  const [logCode, setLogCode] = useState("");
+  const logBookInitial: CodeEntryType[] = [];
+  const [logBook, setLogBook] = useState(logBookInitial);
+  const [currentItem, setCurrentItem] = useState({});
+
+  let onEnter = () => {
+    //alert("Enter pressed code is: " + logCode);
+
+    const today = new Date();
+    const formattedDate = format(today, "dd.MM.yyyy");
+    const formattedTime = format(today, "HH:mm");
+
+    let newCodeItem: CodeEntryType = {
+      code: logCode,
+      codedate: formattedDate,
+      codetime: formattedTime,
+    };
+
+    // Append to Array, with Wrapper Function
+    // https://medium.com/javascript-in-plain-english/how-to-add-to-an-array-in-react-state-3d08ddb2e1dc
+    setLogBook((logBook) => [newCodeItem, ...logBook]);
+  };
+
+  let logItem: EntryType = decodeLogCode(logCode);
+  if (logItem.desc !== "-") {
+    // setCurrentItem(logItem);
+  }
+
   return (
     <div className="App">
-      hallo hallo hallo
-      <b>
-        Jetzt gehts weiter, ..jetzt gehts hier weiter hier was geändert gut, das
-        Jetzt gehts weiter, ..jetzt gehts hier weiter hier was geändert gut, das
-        Jetzt gehts weiter, ..jetzt gehts hier weiter hier was geändert gut, das
-        Jetzt gehts weiter, ..jetzt gehts hier weiter hier was geändert gut, das
-        ist doch schööalkdjlkfjdsölkfjdlökfdjklfdjklfjdslkfjdfklöj ist doch
-        schööalkdjlkfjdsölkfjdlökfdjklfdjklfjdslkfjdfklöj ist doch
-        schööalkdjlkfjdsölkfjdlökfdjklfdjklfjdslkfjdfklöj ist doch
-        schööalkdjlkfjdsölkfjdlökfdjklfdjklfjdslkfjdfklöj ist doch
-        schööalkdjlkfjds ölkfjdlökfdjklfdjklfjdslkfjdfklöj
-      </b>
+      <Box>
+        <Grid container className="Cont-Root" spacing={5}>
+          <Grid item xs={12}>
+            Fittraxx
+          </Grid>
+
+          <Grid item xs={12}>
+            <NewLogEntryPage
+              logCode={logCode}
+              onLogCodeChange={setLogCode}
+              onEnter={onEnter}
+              logItem={logItem}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <LogList logBook={logBook} />
+          </Grid>
+        </Grid>
+      </Box>
     </div>
   );
 }

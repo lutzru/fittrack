@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+/* Define color */
+:root {
+  --col-back1: white;
+  --white: #ffffff;
+}
+
+/* App.tsx */
+.Cont-Root {
+  background-color: var(--col-back1);
+}
