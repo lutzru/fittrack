@@ -47,4 +47,57 @@ export default function useAuth() {
   return useContext(TodosContext);
 }
 
-export { TodosContext, FirebaseAuthContext };
+export { FirebaseAuthContext };
+
+/*
+
+import React, { useContext, useEffect, useState } from "react";
+
+import { firebaseAuth } from "./firebase";
+
+let value = {};
+
+const FirebaseAuthContext = React.createContext(value);
+
+export function useAuth() {
+  return useContext(FirebaseAuthContext);
+}
+
+export function AuthProvider({ children }) {
+  const [currentUser, setCurrentUser] = useState();
+
+  function signup(email, password) {
+    return firebaseAuth.createUserWithEmailAndPassword(email, password);
+  }
+
+  function login(email, password) {
+    return firebaseAuth.signInWithEmailAndPassword(email, password);
+  }
+
+  useEffect(() => {
+    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  let theme = "lutzdark";
+
+  const value = {
+    currentUser,
+    signup,
+    theme: theme,
+  };
+
+  return (
+    <FirebaseAuthContext.Provider value={value}>
+      {" "}
+      hierContextChildren: {children}{" "}
+    </FirebaseAuthContext.Provider>
+  );
+}
+
+export default FirebaseAuthContext;
+
+*/
