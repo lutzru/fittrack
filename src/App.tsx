@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import "./App.css";
 
 import { Box, Button, Grid } from "@material-ui/core";
-
 import NewLogEntry from "./components/NewLogEntry";
 import NewLogEntryPage from "./pages/NewLogEntryPage";
 import decodeLogCode, { EntryType, CodeEntryType } from "./components/Decoder";
 import LogList from "./components/LogList";
 import { format } from "date-fns";
+import Signup from "./components/Signup";
+import { firebaseAuth } from "./firebase";
+import useAuth from "./AuthContext";
 
 function App(): JSX.Element {
   //
@@ -43,10 +45,22 @@ function App(): JSX.Element {
     // setCurrentItem(logItem);
   }
 
+  // Firebase Login https://www.youtube.com/watch?v=PKwu15ldZ7k
+  // UseContext: https://www.youtube.com/watch?v=5LrDIWkK_Bc
+
+  //
+  // so kann ich auf Werte aus dem Kontext zugreifen
+  //
+  let { theme } = useAuth();
+
   return (
     <div className="App">
       <Box>
         <Grid container className="Cont-Root" spacing={5}>
+          <Grid item xs={12}>
+            signup hier --{theme}--
+          </Grid>
+
           <Grid item xs={12}>
             Fittraxx
           </Grid>
