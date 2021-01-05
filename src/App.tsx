@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import Signup from "./components/Signup";
 import { firebaseAuth } from "./firebase";
 import useAuth from "./AuthContext";
+import Login from "./Login";
 
 function App(): JSX.Element {
   //
@@ -58,7 +59,11 @@ function App(): JSX.Element {
       <Box>
         <Grid container className="Cont-Root" spacing={5}>
           <Grid item xs={12}>
-            signup hier --{theme}--
+            <Signup /> Theme aus context: --{theme}--
+            <br />
+            <br />
+            <br />
+            <Login />
           </Grid>
 
           <Grid item xs={12}>

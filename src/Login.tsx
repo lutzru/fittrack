@@ -2,38 +2,36 @@ import { Box, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { format } from "date-fns";
 import React, { useRef, useState } from "react";
-import decodeLogCode, { EntryType, CodeEntryType } from "./Decoder";
 
-import useAuth from "../AuthContext";
+import useAuth from "./AuthContext";
 
-export interface SignupProps {}
+export interface LoginProps {}
 
-const Signup = (props: SignupProps): JSX.Element => {
-  const { signup } = useAuth();
+const Login = (props: LoginProps): JSX.Element => {
+  const { login } = useAuth();
 
   let [email, setEmail] = useState("");
   let [pw1, setPw1] = useState("");
-  let [pw2, setPw2] = useState("");
 
   async function handleSubmit(e: any) {
     e.preventDefault();
 
-    console.log("Signup go  -" + email + "-" + pw1 + "-" + pw2 + "-");
-    if (pw1 === pw2) {
-      console.log("Signup call");
+    console.log("Signup go  -" + email + "-" + pw1 + "-");
 
-      try {
-        await signup(email, pw2);
-        alert("Registrierung erfolgreich!");
-      } catch (e) {
-        alert("Fehler11:" + e);
-      }
+    console.log("Signup call");
+
+    try {
+      let r = await login(email, pw1);
+      console.log("Erfolgreich!: ", r);
+      alert("Login erfolgreich!");
+    } catch (e) {
+      alert("Fehler11:" + e);
     }
   }
 
   return (
     <div>
-      Signup: {email} - {pw1} - {pw2}
+      Login: {email} - {pw1}
       <br /> <br />
       <TextField
         id="username"
@@ -54,21 +52,11 @@ const Signup = (props: SignupProps): JSX.Element => {
         }}
       />
       <br /> <br />
-      <TextField
-        id="password"
-        label="Password Confirmation"
-        type="password"
-        value={pw2}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setPw2(e.target.value);
-        }}
-      />
-      <br /> <br />
       <Button variant="contained" color="primary" onClick={handleSubmit}>
-        signup
+        login
       </Button>
     </div>
   );
 };
 
-export default Signup;
+export default Login;

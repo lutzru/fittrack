@@ -2,14 +2,22 @@ import React, { Component } from "react";
 import { useContext, useEffect, useState, createContext } from "react";
 import { firebaseAuth } from "./firebase";
 
-let signup = (email: string, password: string) => {
-  //return firebaseAuth.createUserWithEmailAndPassword(email, password);
+let signup = async (email: string, password: string) => {
+  console.log("Try Signup with: " + email + " " + password);
+  await firebaseAuth.createUserWithEmailAndPassword(email, password);
+};
+
+let login = async (email: string, password: string) => {
+  console.log("Try Login with: " + email + " " + password);
+  await firebaseAuth.signInWithEmailAndPassword(email, password);
 };
 
 let value = {
   authenticated: true,
   lang: "en",
   theme: "lutz-dunkel",
+  signup: signup,
+  login: login,
 };
 
 //
