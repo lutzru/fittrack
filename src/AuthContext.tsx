@@ -10,6 +10,8 @@ let signup = async (email: string, password: string) => {
 let login = async (email: string, password: string) => {
   console.log("Try Login with: " + email + " " + password);
   await firebaseAuth.signInWithEmailAndPassword(email, password);
+
+  // user
 };
 
 let value = {
@@ -23,81 +25,28 @@ let value = {
 //
 // React Context erzeugen
 //
-const TodosContext = React.createContext(value);
+// - was sich wenig ändert, global erreichbar, nicht Statemanagement
+// - alternativ alles in Redux
+// - login, per dispatch an Redux
+// - im Reducer, Actionen auslösen (Serverlogik nicht in der GuiComponent)
+// - Reducer gut testbar
+// - Gui Component, keine Logik einfügen
+//
+// - Context eher für: Theme,Sprache
+//   (Dinge die nur einmal da sind, und wenig geändert werden.)
+//   Theme im Context, was ausgewählt, z.B. dark im State
+//
+const AuthContext = React.createContext(value);
 
 //
 // Provider aus dem React context holen
 //
-const TodosProvider = TodosContext.Provider;
-
-//
-// eigene Komponente erzeugen, die den Context.Provider benutzt, und Kinder/children einbindet
-// unter value zentrale Werte einsetzen
-//
-class FirebaseAuthContext extends Component {
-  render() {
-    return <TodosProvider value={value}>{this.props.children}</TodosProvider>;
-  }
-}
+const AuthProvider = AuthContext.Provider;
 
 //
 // hier den Context per Hook erreichbar machen
+// kein Tag in index mit Provider.. nötig
 //
 export default function useAuth() {
-  return useContext(TodosContext);
+  return useContext(AuthContext);
 }
-
-export { FirebaseAuthContext };
-
-/*
-
-import React, { useContext, useEffect, useState } from "react";
-
-import { firebaseAuth } from "./firebase";
-
-let value = {};
-
-const FirebaseAuthContext = React.createContext(value);
-
-export function useAuth() {
-  return useContext(FirebaseAuthContext);
-}
-
-export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
-
-  function signup(email, password) {
-    return firebaseAuth.createUserWithEmailAndPassword(email, password);
-  }
-
-  function login(email, password) {
-    return firebaseAuth.signInWithEmailAndPassword(email, password);
-  }
-
-  useEffect(() => {
-    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  let theme = "lutzdark";
-
-  const value = {
-    currentUser,
-    signup,
-    theme: theme,
-  };
-
-  return (
-    <FirebaseAuthContext.Provider value={value}>
-      {" "}
-      hierContextChildren: {children}{" "}
-    </FirebaseAuthContext.Provider>
-  );
-}
-
-export default FirebaseAuthContext;
-
-*/

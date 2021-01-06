@@ -9,6 +9,7 @@ import useAuth from "../AuthContext";
 export interface SignupProps {}
 
 const Signup = (props: SignupProps): JSX.Element => {
+  
   const { signup } = useAuth();
 
   let [email, setEmail] = useState("");
