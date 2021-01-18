@@ -1,14 +1,19 @@
+import React, { useRef, useState, Dispatch } from "react";
+import { useDispatch } from "react-redux";
+
 import { Box, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { format } from "date-fns";
-import React, { useRef, useState } from "react";
 
 import useAuth from "./AuthContext";
+import { ActionTypes, loginUserAction } from "./reduxStuff";
 
 export interface LoginProps {}
 
 const Login = (props: LoginProps): JSX.Element => {
   const { login } = useAuth();
+
+  const dispatch = useDispatch<Dispatch<ActionTypes>>();
 
   let [email, setEmail] = useState("");
   let [pw1, setPw1] = useState("");
@@ -16,17 +21,14 @@ const Login = (props: LoginProps): JSX.Element => {
   async function handleSubmit(e: any) {
     e.preventDefault();
 
-    console.log("Signup go  -" + email + "-" + pw1 + "-");
+    console.log("Login go  -" + email + "-" + pw1 + "-");
 
-    console.log("Signup call");
+    dispatch({
+      type: loginUserAction,
+      payload: { useremail: email, password: pw1 },
+    });
 
-    try {
-      let r = await login(email, pw1);
-      console.log("Erfolgreich!: ", r);
-      alert("Login erfolgreich!");
-    } catch (e) {
-      alert("Fehler11:" + e);
-    }
+    //login(email, pw1);
   }
 
   return (

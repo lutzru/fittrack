@@ -9,7 +9,6 @@ import useAuth from "../AuthContext";
 export interface SignupProps {}
 
 const Signup = (props: SignupProps): JSX.Element => {
-  
   const { signup } = useAuth();
 
   let [email, setEmail] = useState("");
@@ -23,12 +22,7 @@ const Signup = (props: SignupProps): JSX.Element => {
     if (pw1 === pw2) {
       console.log("Signup call");
 
-      try {
-        await signup(email, pw2);
-        alert("Registrierung erfolgreich!");
-      } catch (e) {
-        alert("Fehler11:" + e);
-      }
+      signup(email, pw2);
     }
   }
 

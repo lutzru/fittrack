@@ -4,14 +4,32 @@ import { firebaseAuth } from "./firebase";
 
 let signup = async (email: string, password: string) => {
   console.log("Try Signup with: " + email + " " + password);
-  await firebaseAuth.createUserWithEmailAndPassword(email, password);
+
+  try {
+    await firebaseAuth.createUserWithEmailAndPassword(email, password);
+    alert("Registrierung erfolgreich!");
+  } catch (e) {
+    alert("Fehler11:" + e);
+  }
 };
 
 let login = async (email: string, password: string) => {
-  console.log("Try Login with: " + email + " " + password);
-  await firebaseAuth.signInWithEmailAndPassword(email, password);
+  /* 
+  //const dispatch = useDispatch<Dispatch<ActionTypes>>();
 
-  // user
+  console.log("Try Login with: " + email + " " + password);
+
+  try {
+    let res = await firebaseAuth.signInWithEmailAndPassword(email, password);
+    console.log("Erfolgreich!: ", res);
+    alert("Login erfolgreich!");
+  } catch (e) {
+    alert("Fehler11:" + e);
+  }
+
+  //console.log("Loginresult: ", res);
+
+  */
 };
 
 let value = {
