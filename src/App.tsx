@@ -12,6 +12,8 @@ import Signup from "./components/Signup";
 import { firebaseAuth } from "./firebase";
 import useAuth from "./AuthContext";
 import Login from "./Login";
+import { useSelector } from "react-redux";
+import { IGeneralState } from "./reduxStuff";
 
 function App(): JSX.Element {
   //
@@ -54,11 +56,17 @@ function App(): JSX.Element {
   //
   let { theme } = useAuth();
 
+  const message = useSelector<IGeneralState>((state) => state.message);
+
   return (
     <div className="App">
       <Box>
         <Grid container className="Cont-Root" spacing={5}>
           <Grid item xs={12}>
+            Message:---{message}---
+            <br />
+            <br />
+            <br />
             <Signup /> Theme aus context: --{theme}--
             <br />
             <br />

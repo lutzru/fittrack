@@ -6,14 +6,14 @@ import Button from "@material-ui/core/Button";
 import { format } from "date-fns";
 
 import useAuth from "./AuthContext";
-import { ActionTypes, loginUserAction } from "./reduxStuff";
+import { TActionTypes, CLoginUserAction } from "./reduxStuff";
 
 export interface LoginProps {}
 
 const Login = (props: LoginProps): JSX.Element => {
   const { login } = useAuth();
 
-  const dispatch = useDispatch<Dispatch<ActionTypes>>();
+  const dispatch = useDispatch<Dispatch<TActionTypes>>();
 
   let [email, setEmail] = useState("");
   let [pw1, setPw1] = useState("");
@@ -24,7 +24,7 @@ const Login = (props: LoginProps): JSX.Element => {
     console.log("Login go  -" + email + "-" + pw1 + "-");
 
     dispatch({
-      type: loginUserAction,
+      type: CLoginUserAction,
       payload: { useremail: email, password: pw1 },
     });
 

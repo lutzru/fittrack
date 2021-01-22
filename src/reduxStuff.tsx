@@ -1,6 +1,8 @@
 import { firebaseAuth } from "./firebase";
-
-import { createStore } from "redux";
+import { applyMiddleware } from "redux";
+import { combineReducers, createStore } from "redux";
+import { devToolsEnhancer } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 
 //
 //  This file contains all redux related items
@@ -9,109 +11,60 @@ import { createStore } from "redux";
 //  - store
 //
 
-const initialState = {
-  todos: [
-    { id: 0, text: "Learn React", completed: true },
-    { id: 1, text: "Learn Redux", completed: false, color: "purple" },
-    { id: 2, text: "Build something fun!", completed: false, color: "blue" },
-  ],
-  filters: {
-    status: "All",
-    colors: [],
-  },
-  message: "Moin/Tach",
-  loggedin: false,
-  usermail: "---",
-};
-
-/* Define Actions and its Payload */
-
-export const addLogcodeAction = "add/logcode";
-interface addLogcode {
-  type: typeof addLogcodeAction;
-  payload: string;
+//
+// --------------- Interfaces -----------------------------
+//
+export interface IGeneralState {
+  message: string;
 }
 
-export const setUserAction = "set/user";
-interface setUser {
+//
+// --------------- Action definitions -----------------------------
+//
+
+const setUserAction = "set/user";
+interface ISetUser {
   type: typeof setUserAction;
   payload: string;
 }
 
-export const loginUserAction = "login/user";
-interface loginUser {
-  type: typeof loginUserAction;
+export const CLoginUserAction = "login/user";
+interface ILoginUser {
+  type: typeof CLoginUserAction;
   payload: { useremail: string; password: string };
 }
 
-export const changeMessageAction = "change/message";
-interface changeMessage {
-  type: typeof changeMessageAction;
-  payload: string;
+//
+// --------------- Types -----------------------------
+//
+
+export type TActionTypes = ISetUser | ILoginUser;
+
+//
+// --------------- initial State -----------------------------
+//
+
+export const initialGeneralState: IGeneralState = {
+  message: "Moin/Tach jau jau jau ",
+};
+
+//
+// ---------------   -----------------------------
+//
+
+enum GeneralStateAction {
+  SET_USER = "SET_USER",
 }
 
-export type ActionTypes = addLogcode | changeMessage | setUser | loginUser;
+type GeneralStateActions = {
+  type: GeneralStateAction.SET_USER;
+  payload: { user: string; role: string; token: string };
+};
 
-//export type ActionKinds = loginUserAction;
-
-// Use the initialState as a default value
-export function myRootReducer(state = initialState, action: ActionTypes) {
-  // The reducer normally looks at the action type field to decide what happens
-  switch (action.type) {
-    // Do something here based on the different types of actions
-
-    case loginUserAction:
-      console.log(
-        `Reducer Do Login: ${action.payload.useremail} ${action.payload.password} `
-      );
-
-      //
-      // so geht das nicht:
-      // hier kommt per Dispatch die Login Action
-      // jetzt soll - auf den Serverlogin warten
-      //            - wenn erfolgreich Username setzen
-      //
-
-      /*
-      firebaseAuth
-        .signInWithEmailAndPassword(
-          action.payload.useremail,
-          action.payload.password
-        )
-        .then(() => {
-          console.log("Erfolgreich!: ");
-          alert("Login erfolgreich!");
-
-          return {
-            ...state,
-            loggedin: true,
-            usermail: action.payload.useremail,
-          };
-        })
-        .catch((e) => {
-          alert("Fehler11:" + e);
-
-          return {
-            ...state,
-            loggedin: false,
-            usermail: "---",
-          };
-        });
-        */
-
-      return state;
-
-    default:
-      // If this reducer doesn't recognize the action type, or doesn't
-      // care about this specific action, return the existing state unchanged
-      return state;
-  }
+export function GeneralStateReducer(
+  state: IGeneralState = initialGeneralState,
+  action: GeneralStateActions
+): IGeneralState {
+  console.log("jo");
+  return state;
 }
-
-//
-// ---------------------------------------
-// Store
-//
-//
-
-export const store = createStore(myRootReducer);
