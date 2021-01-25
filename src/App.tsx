@@ -13,7 +13,9 @@ import { firebaseAuth } from "./firebase";
 import useAuth from "./AuthContext";
 import Login from "./Login";
 import { useSelector } from "react-redux";
-import { IGeneralState } from "./reduxStuff";
+
+import Todos from "./components/todos";
+import Notification from "./components/notification";
 
 function App(): JSX.Element {
   //
@@ -56,29 +58,38 @@ function App(): JSX.Element {
   //
   let { theme } = useAuth();
 
-  const message = useSelector<IGeneralState>((state) => state.message);
-
   return (
     <div className="App">
       <Box>
         <Grid container className="Cont-Root" spacing={5}>
           <Grid item xs={12}>
-            Message:---{message}---
+            <br />
+            <br />
+            <Notification />
             <br />
             <br />
             <br />
-            <Signup /> Theme aus context: --{theme}--
-            <br />
-            <br />
-            <br />
-            <Login />
           </Grid>
 
           <Grid item xs={12}>
             Fittraxx
           </Grid>
+        </Grid>
+      </Box>
+    </div>
+  );
+}
 
-          <Grid item xs={12}>
+export default App;
+
+/*
+
+<Todos />
+
+            <Signup /> Theme aus context: --{theme}--
+            <Login />
+
+                      <Grid item xs={12}>
             <NewLogEntryPage
               logCode={logCode}
               onLogCodeChange={setLogCode}
@@ -90,10 +101,7 @@ function App(): JSX.Element {
           <Grid item xs={12}>
             <LogList logBook={logBook} />
           </Grid>
-        </Grid>
-      </Box>
-    </div>
-  );
-}
 
-export default App;
+          
+
+*/

@@ -4,12 +4,14 @@ import "./index.css";
 import App from "./App";
 //import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { store } from "./reduxStore";
+
+import storeEasyPeasy from "./EasyPeasyStore";
+
 import FirebaseAuthContext from "./AuthContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={storeEasyPeasy}>
       <App />
     </Provider>
   </React.StrictMode>,
